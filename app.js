@@ -34,7 +34,7 @@ function playChime(type) {
   const now = ctx.currentTime;
 
   notes.forEach((freq, i) => {
-    const osc  = ctx.createOscillator();
+    const osc = ctx.createOscillator();
     const gain = ctx.createGain();
 
     // 柔らかい音色：サイン波 + 少量の三角波
@@ -42,10 +42,10 @@ function playChime(type) {
     osc.frequency.setValueAtTime(freq, now);
     // 僅かに周波数を揺らしてビブラート感
     osc.frequency.linearRampToValueAtTime(freq * 1.002, now + 0.3);
-    osc.frequency.linearRampToValueAtTime(freq,         now + 0.6);
+    osc.frequency.linearRampToValueAtTime(freq, now + 0.6);
 
     // エンベロープ: ソフトアタック → 長めのリリース
-    const startTime  = now + i * 0.12;
+    const startTime = now + i * 0.12;
     const peakVolume = type === 'end' ? 0.18 : 0.12;
     gain.gain.setValueAtTime(0, startTime);
     gain.gain.linearRampToValueAtTime(peakVolume, startTime + 0.08);
@@ -67,7 +67,7 @@ function playPauseSound() {
   const ctx = getAudioCtx();
   const now = ctx.currentTime;
 
-  const osc  = ctx.createOscillator();
+  const osc = ctx.createOscillator();
   const gain = ctx.createGain();
   osc.type = 'sine';
   osc.frequency.setValueAtTime(320, now);
@@ -124,31 +124,31 @@ function injectSvgGradient() {
 // ===========================
 const CIRCUMFERENCE = 2 * Math.PI * 96; // ≈ 603.19
 
-const elTimeText    = document.getElementById('timeText');
-const elTimeLabel   = document.getElementById('timeLabel');
+const elTimeText = document.getElementById('timeText');
+const elTimeLabel = document.getElementById('timeLabel');
 const elRingProgress = document.getElementById('ringProgress');
-const elStartBtn    = document.getElementById('startBtn');
-const elResetBtn    = document.getElementById('resetBtn');
-const elSoundBtn    = document.getElementById('soundBtn');
-const elCard        = document.getElementById('mainCard');
-const elCustomMin   = document.getElementById('customMinutes');
-const elCustomSec   = document.getElementById('customSeconds');
+const elStartBtn = document.getElementById('startBtn');
+const elResetBtn = document.getElementById('resetBtn');
+const elSoundBtn = document.getElementById('soundBtn');
+const elCard = document.getElementById('mainCard');
+const elCustomMin = document.getElementById('customMinutes');
+const elCustomSec = document.getElementById('customSeconds');
 const elCompleteOverlay = document.getElementById('completeOverlay');
-const elCloseComplete   = document.getElementById('closeCompleteBtn');
-const elIconPlay    = elStartBtn.querySelector('.icon-play');
-const elIconPause   = elStartBtn.querySelector('.icon-pause');
-const elIconSoundOn  = elSoundBtn.querySelector('.icon-sound-on');
+const elCloseComplete = document.getElementById('closeCompleteBtn');
+const elIconPlay = elStartBtn.querySelector('.icon-play');
+const elIconPause = elStartBtn.querySelector('.icon-pause');
+const elIconSoundOn = elSoundBtn.querySelector('.icon-sound-on');
 const elIconSoundOff = elSoundBtn.querySelector('.icon-sound-off');
 
-let totalSeconds   = 0;   // 設定秒数
-let remainSeconds  = 0;   // 残り秒数
-let intervalId     = null;
-let isRunning      = false;
-let activePreset   = null;
+let totalSeconds = 0;   // 設定秒数
+let remainSeconds = 0;   // 残り秒数
+let intervalId = null;
+let isRunning = false;
+let activePreset = null;
 
 // プログレスリングを更新
 function updateRing(remaining, total) {
-  const ratio  = total > 0 ? remaining / total : 0;
+  const ratio = total > 0 ? remaining / total : 0;
   const offset = CIRCUMFERENCE * (1 - ratio);
   elRingProgress.style.strokeDashoffset = offset;
 }
@@ -178,8 +178,8 @@ function updateDisplay(sec, total) {
 
 // スタート状態のUI切り替え
 function setRunningUI(running) {
-  elIconPlay.style.display  = running ? 'none'  : '';
-  elIconPause.style.display = running ? ''      : 'none';
+  elIconPlay.classList.toggle('hidden', running);
+  elIconPause.classList.toggle('hidden', !running);
   if (running) {
     elCard.classList.add('running');
   } else {
@@ -201,8 +201,8 @@ function startTimer() {
 
     if (remainSeconds <= 0) {
       clearInterval(intervalId);
-      intervalId  = null;
-      isRunning   = false;
+      intervalId = null;
+      isRunning = false;
       setRunningUI(false);
       elTimeLabel.textContent = '完了';
       updateRing(0, totalSeconds);
@@ -215,7 +215,7 @@ function startTimer() {
 function pauseTimer() {
   clearInterval(intervalId);
   intervalId = null;
-  isRunning  = false;
+  isRunning = false;
   setRunningUI(false);
   playPauseSound();
   updateDisplay(remainSeconds, totalSeconds);
@@ -225,7 +225,7 @@ function pauseTimer() {
 function resetTimer() {
   clearInterval(intervalId);
   intervalId = null;
-  isRunning  = false;
+  isRunning = false;
   setRunningUI(false);
 
   remainSeconds = totalSeconds;
@@ -258,7 +258,7 @@ function onComplete() {
 function loadCustomTime() {
   const m = Math.max(0, Math.min(99, parseInt(elCustomMin.value, 10) || 0));
   const s = Math.max(0, Math.min(59, parseInt(elCustomSec.value, 10) || 0));
-  totalSeconds  = m * 60 + s;
+  totalSeconds = m * 60 + s;
   remainSeconds = totalSeconds;
   elCustomMin.value = String(m);
   elCustomSec.value = String(s);
@@ -307,8 +307,8 @@ elResetBtn.addEventListener('click', () => {
 // サウンドのオン/オフ
 elSoundBtn.addEventListener('click', () => {
   soundEnabled = !soundEnabled;
-  elIconSoundOn.style.display  = soundEnabled ? '' : 'none';
-  elIconSoundOff.style.display = soundEnabled ? 'none' : '';
+  elIconSoundOn.classList.toggle('hidden', !soundEnabled);
+  elIconSoundOff.classList.toggle('hidden', soundEnabled);
   elSoundBtn.title = soundEnabled ? 'サウンドをオフ' : 'サウンドをオン';
 });
 
@@ -317,7 +317,7 @@ document.querySelectorAll('.preset-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     if (isRunning) pauseTimer();
     const minutes = parseInt(btn.dataset.minutes, 10);
-    totalSeconds  = minutes * 60;
+    totalSeconds = minutes * 60;
     remainSeconds = totalSeconds;
     elCustomMin.value = String(minutes);
     elCustomSec.value = '0';
@@ -352,7 +352,7 @@ elCloseComplete.addEventListener('click', () => {
 function init() {
   createBubbles();
   injectSvgGradient();
-  elRingProgress.style.strokeDasharray  = CIRCUMFERENCE;
+  elRingProgress.style.strokeDasharray = CIRCUMFERENCE;
   elRingProgress.style.strokeDashoffset = CIRCUMFERENCE;
   updateDisplay(0, 0);
 }
