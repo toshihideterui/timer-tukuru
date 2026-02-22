@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>やすらぎタイマー</title>
+  <meta name="description" content="自然をテーマにした、癒しの水色タイマー。静かで穏やかなサウンドとともに、リラックスした時間を過ごせます。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500&family=Lato:wght@300;400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- 背景の泡エフェクト -->
+  <div class="bg-bubbles" id="bgBubbles"></div>
+
+  <!-- 水面の波紋 -->
+  <div class="water-surface">
+    <svg class="wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120" preserveAspectRatio="none">
+      <path d="M0,60 C240,100 480,20 720,60 C960,100 1200,20 1440,60 L1440,120 L0,120 Z" fill="rgba(173,216,230,0.15)"/>
+    </svg>
+    <svg class="wave wave2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120" preserveAspectRatio="none">
+      <path d="M0,40 C360,90 720,10 1080,50 C1260,70 1380,30 1440,40 L1440,120 L0,120 Z" fill="rgba(135,206,235,0.1)"/>
+    </svg>
+  </div>
+
+  <div class="container">
+
+    <!-- ヘッダー -->
+    <header class="header">
+      <div class="leaf-icon">🍃</div>
+      <h1 class="title">やすらぎタイマー</h1>
+      <p class="subtitle">静かな時の流れとともに</p>
+    </header>
+
+    <!-- メインカード -->
+    <main class="card" id="mainCard">
+
+      <!-- プリセットボタン -->
+      <section class="presets" aria-label="よく使う時間のプリセット">
+        <button class="preset-btn" data-minutes="1" id="preset1">1分</button>
+        <button class="preset-btn" data-minutes="5" id="preset5">5分</button>
+        <button class="preset-btn" data-minutes="10" id="preset10">10分</button>
+        <button class="preset-btn" data-minutes="15" id="preset15">15分</button>
+        <button class="preset-btn" data-minutes="25" id="preset25">25分</button>
+        <button class="preset-btn" data-minutes="30" id="preset30">30分</button>
+      </section>
+
+      <!-- 円形プログレス & 時刻表示 -->
+      <section class="timer-section" aria-label="タイマー表示">
+        <div class="circle-wrapper">
+          <!-- SVG プログレスリング -->
+          <svg class="progress-ring" viewBox="0 0 220 220" aria-hidden="true">
+            <!-- 背景トラック -->
+            <circle class="ring-track" cx="110" cy="110" r="96" />
+            <!-- 経過を示す波紋 -->
+            <circle class="ring-ripple" cx="110" cy="110" r="96" id="ringRipple" />
+            <!-- プログレスバー -->
+            <circle class="ring-progress" cx="110" cy="110" r="96" id="ringProgress" />
+          </svg>
+
+          <!-- 中央の時間表示 -->
+          <div class="time-display" id="timeDisplay">
+            <span class="time-text" id="timeText">00:00</span>
+            <span class="time-label" id="timeLabel">準備中</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- カスタム入力 -->
+      <section class="custom-input-section" aria-label="カスタム時間の入力">
+        <div class="input-group">
+          <label for="customMinutes" class="input-label">分</label>
+          <input type="number" id="customMinutes" class="time-input" min="0" max="99" value="0" placeholder="0" aria-label="分を入力" />
+        </div>
+        <span class="input-sep">:</span>
+        <div class="input-group">
+          <label for="customSeconds" class="input-label">秒</label>
+          <input type="number" id="customSeconds" class="time-input" min="0" max="59" value="0" placeholder="0" aria-label="秒を入力" />
+        </div>
+      </section>
+
+      <!-- コントロールボタン -->
+      <section class="controls" aria-label="タイマーの操作">
+        <button class="btn btn-reset" id="resetBtn" title="リセット" aria-label="リセット">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.5"/></svg>
+        </button>
+        <button class="btn btn-start" id="startBtn" aria-label="スタート・一時停止">
+          <svg class="icon-play" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <svg class="icon-pause" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+        </button>
+        <button class="btn btn-sound" id="soundBtn" title="サウンドのオン/オフ" aria-label="サウンドのオン/オフ">
+          <svg class="icon-sound-on" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          <svg class="icon-sound-off" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+        </button>
+      </section>
+
+    </main>
+
+    <!-- 完了メッセージ -->
+    <div class="complete-overlay" id="completeOverlay" aria-live="polite" aria-atomic="true">
+      <div class="complete-card">
+        <div class="complete-emoji">✨</div>
+        <p class="complete-text">お疲れさまでした</p>
+        <p class="complete-sub">ゆっくり深呼吸してください</p>
+        <button class="btn-close-complete" id="closeCompleteBtn">閉じる</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

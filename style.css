@@ -1,0 +1,594 @@
+/* ===========================
+   CSS カスタムプロパティ
+   =========================== */
+:root {
+  /* カラーパレット（水色・自然系） */
+  --sky-light:    #e0f7fa;
+  --sky-mid:      #b2ebf2;
+  --sky-main:     #81d4fa;
+  --sky-deep:     #4fc3f7;
+  --sky-accent:   #29b6f6;
+  --teal-soft:    #80cbc4;
+  --teal-mid:     #4db6ac;
+  --green-leaf:   #a5d6a7;
+  --white-glass:  rgba(255, 255, 255, 0.65);
+  --white-soft:   rgba(255, 255, 255, 0.85);
+  --text-deep:    #2e6b7e;
+  --text-mid:     #4a8fa3;
+  --text-light:   #7ab8c9;
+  --shadow-soft:  rgba(79, 195, 247, 0.25);
+  --shadow-card:  rgba(41, 182, 246, 0.18);
+
+  /* タイポグラフィ */
+  --font-jp: 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', sans-serif;
+  --font-en: 'Lato', sans-serif;
+
+  /* アニメーション */
+  --ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ===========================
+   リセット & ベース
+   =========================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100%;
+  font-family: var(--font-jp);
+  background: linear-gradient(
+    160deg,
+    #d6f0fa 0%,
+    #c2e9f5 25%,
+    #b8e4f0 50%,
+    #c5eef7 75%,
+    #d9f4fc 100%
+  );
+  background-attachment: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ===========================
+   背景エフェクト（泡）
+   =========================== */
+.bg-bubbles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.bubble {
+  position: absolute;
+  bottom: -80px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.7), rgba(129,212,250,0.25));
+  border: 1px solid rgba(255,255,255,0.5);
+  animation: floatUp linear infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes floatUp {
+  0%   { transform: translateY(0) translateX(0) scale(1);    opacity: 0; }
+  10%  { opacity: 0.7; }
+  50%  { transform: translateY(-45vh) translateX(20px) scale(1.05); }
+  90%  { opacity: 0.5; }
+  100% { transform: translateY(-105vh) translateX(-15px) scale(0.9); opacity: 0; }
+}
+
+/* ===========================
+   水面の波
+   =========================== */
+.water-surface {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wave {
+  width: 100%;
+  height: 80px;
+  display: block;
+  animation: waveFlow 8s linear infinite;
+}
+
+.wave2 {
+  animation-duration: 11s;
+  animation-direction: reverse;
+  margin-top: -60px;
+}
+
+@keyframes waveFlow {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ===========================
+   コンテナ
+   =========================== */
+.container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+
+/* ===========================
+   ヘッダー
+   =========================== */
+.header {
+  text-align: center;
+  animation: fadeInDown 0.8s var(--ease-smooth) both;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.leaf-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 6px;
+  animation: sway 4s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+@keyframes sway {
+  0%, 100% { transform: rotate(-5deg); }
+  50%       { transform: rotate(5deg); }
+}
+
+.title {
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  font-weight: 500;
+  color: var(--text-deep);
+  letter-spacing: 0.12em;
+  text-shadow: 0 1px 3px rgba(255,255,255,0.8);
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  margin-top: 4px;
+  letter-spacing: 0.1em;
+  font-weight: 300;
+}
+
+/* ===========================
+   メインカード（グラスモーフィズム）
+   =========================== */
+.card {
+  width: 100%;
+  background: var(--white-glass);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-radius: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow:
+    0 8px 32px var(--shadow-card),
+    0 2px 8px rgba(255, 255, 255, 0.4) inset,
+    0 -2px 8px rgba(129, 212, 250, 0.1) inset;
+  padding: 36px 32px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  animation: fadeInUp 0.9s var(--ease-smooth) 0.2s both;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===========================
+   プリセットボタン
+   =========================== */
+.presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.preset-btn {
+  font-family: var(--font-jp);
+  font-size: 0.82rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: var(--text-mid);
+  background: rgba(255, 255, 255, 0.6);
+  border: 1.5px solid rgba(129, 212, 250, 0.4);
+  border-radius: 100px;
+  padding: 6px 16px;
+  cursor: pointer;
+  transition:
+    background 0.25s var(--ease-smooth),
+    border-color 0.25s,
+    color 0.25s,
+    box-shadow 0.25s,
+    transform 0.15s var(--ease-spring);
+}
+
+.preset-btn:hover {
+  background: rgba(179, 229, 252, 0.5);
+  border-color: var(--sky-accent);
+  color: var(--text-deep);
+  box-shadow: 0 2px 10px var(--shadow-soft);
+  transform: translateY(-2px);
+}
+
+.preset-btn.active {
+  background: linear-gradient(135deg, var(--sky-main), var(--sky-deep));
+  border-color: var(--sky-accent);
+  color: #fff;
+  box-shadow: 0 4px 14px var(--shadow-soft);
+  font-weight: 500;
+}
+
+/* ===========================
+   サークル & プログレスリング
+   =========================== */
+.timer-section {
+  display: flex;
+  justify-content: center;
+}
+
+.circle-wrapper {
+  position: relative;
+  width: 220px;
+  height: 220px;
+}
+
+.progress-ring {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+/* 背景トラック */
+.ring-track {
+  fill: none;
+  stroke: rgba(179, 229, 252, 0.3);
+  stroke-width: 10;
+}
+
+/* 波紋エフェクト */
+.ring-ripple {
+  fill: none;
+  stroke: rgba(79, 195, 247, 0.15);
+  stroke-width: 18;
+  stroke-dasharray: 603;
+  stroke-dashoffset: 0;
+  stroke-linecap: round;
+  animation: ripplePulse 3s ease-in-out infinite;
+}
+
+@keyframes ripplePulse {
+  0%, 100% { stroke-width: 18; opacity: 0.3; }
+  50%       { stroke-width: 28; opacity: 0.08; }
+}
+
+/* プログレスバー */
+.ring-progress {
+  fill: none;
+  stroke: url(#progressGrad);
+  stroke-width: 10;
+  stroke-linecap: round;
+  stroke-dasharray: 603;
+  stroke-dashoffset: 603; /* JS で制御 */
+  transition: stroke-dashoffset 0.6s var(--ease-smooth);
+  filter: drop-shadow(0 0 6px rgba(79, 195, 247, 0.6));
+}
+
+/* グラデーション定義（SVG内に定義するためインラインで書くが、CSSフィルタ参照用） */
+
+/* 中央の時間表示 */
+.time-display {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.time-text {
+  font-family: var(--font-en);
+  font-size: clamp(2.4rem, 10vw, 3rem);
+  font-weight: 300;
+  color: var(--text-deep);
+  letter-spacing: 0.05em;
+  line-height: 1;
+  text-shadow: 0 2px 6px rgba(255,255,255,0.9);
+  transition: color 0.4s;
+}
+
+.time-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  color: var(--text-light);
+  font-weight: 300;
+}
+
+/* ===========================
+   カスタム入力
+   =========================== */
+.custom-input-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.input-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: var(--text-light);
+}
+
+.time-input {
+  font-family: var(--font-en);
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--text-deep);
+  background: rgba(255,255,255,0.55);
+  border: 1.5px solid rgba(129, 212, 250, 0.45);
+  border-radius: 14px;
+  width: 72px;
+  text-align: center;
+  padding: 8px 4px;
+  outline: none;
+  transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+  -moz-appearance: textfield;
+}
+
+.time-input::-webkit-outer-spin-button,
+.time-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.time-input:focus {
+  border-color: var(--sky-accent);
+  box-shadow: 0 0 0 3px rgba(79, 195, 247, 0.2);
+  background: rgba(255,255,255,0.8);
+}
+
+.input-sep {
+  font-size: 1.8rem;
+  font-weight: 300;
+  color: var(--text-light);
+  margin-top: -4px;
+}
+
+/* ===========================
+   コントロールボタン
+   =========================== */
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* 共通ボタン */
+.btn {
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    transform 0.18s var(--ease-spring),
+    box-shadow 0.25s,
+    background 0.25s;
+}
+
+.btn:active {
+  transform: scale(0.92) !important;
+}
+
+/* スタートボタン */
+.btn-start {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--sky-main) 0%, var(--sky-accent) 100%);
+  box-shadow:
+    0 6px 20px rgba(41, 182, 246, 0.45),
+    0 2px 6px rgba(255,255,255,0.3) inset;
+  color: #fff;
+}
+
+.btn-start svg {
+  width: 26px;
+  height: 26px;
+  transition: transform 0.18s var(--ease-spring);
+}
+
+.btn-start:hover {
+  transform: translateY(-3px) scale(1.06);
+  box-shadow:
+    0 10px 28px rgba(41, 182, 246, 0.55),
+    0 2px 6px rgba(255,255,255,0.3) inset;
+}
+
+/* リセット・サウンドボタン */
+.btn-reset,
+.btn-sound {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1.5px solid rgba(129, 212, 250, 0.4);
+  color: var(--text-mid);
+  box-shadow: 0 2px 8px rgba(129, 212, 250, 0.2);
+}
+
+.btn-reset svg,
+.btn-sound svg {
+  width: 18px;
+  height: 18px;
+}
+
+.btn-reset:hover,
+.btn-sound:hover {
+  background: rgba(179, 229, 252, 0.5);
+  border-color: var(--sky-accent);
+  color: var(--text-deep);
+  transform: translateY(-2px) scale(1.08);
+  box-shadow: 0 4px 14px rgba(79, 195, 247, 0.3);
+}
+
+/* ===========================
+   完了オーバーレイ
+   =========================== */
+.complete-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(178, 235, 242, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s var(--ease-smooth);
+}
+
+.complete-overlay.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.complete-card {
+  background: var(--white-soft);
+  border-radius: 28px;
+  border: 1px solid rgba(255,255,255,0.8);
+  box-shadow: 0 12px 48px rgba(41, 182, 246, 0.25);
+  padding: 48px 56px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  animation: popIn 0.5s var(--ease-spring) both;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+.complete-emoji {
+  font-size: 3rem;
+  animation: glitter 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes glitter {
+  from { transform: scale(1) rotate(-5deg); filter: brightness(1); }
+  to   { transform: scale(1.1) rotate(5deg); filter: brightness(1.2); }
+}
+
+.complete-text {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--text-deep);
+  letter-spacing: 0.1em;
+}
+
+.complete-sub {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  letter-spacing: 0.08em;
+  font-weight: 300;
+}
+
+.btn-close-complete {
+  margin-top: 8px;
+  font-family: var(--font-jp);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  color: var(--text-mid);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1.5px solid rgba(129, 212, 250, 0.5);
+  border-radius: 100px;
+  padding: 8px 28px;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.15s var(--ease-spring);
+}
+
+.btn-close-complete:hover {
+  background: rgba(179, 229, 252, 0.6);
+  transform: scale(1.05);
+}
+
+/* ===========================
+   タイマー稼働中のアニメーション
+   =========================== */
+.running .time-text {
+  color: var(--sky-accent);
+}
+
+.running .ring-ripple {
+  animation: ripplePulse 1.5s ease-in-out infinite;
+}
+
+/* ===========================
+   レスポンシブ
+   =========================== */
+@media (max-width: 400px) {
+  .card {
+    padding: 28px 20px 32px;
+    gap: 22px;
+  }
+
+  .circle-wrapper {
+    width: 190px;
+    height: 190px;
+  }
+
+  .time-text {
+    font-size: 2.2rem;
+  }
+
+  .presets {
+    gap: 6px;
+  }
+
+  .preset-btn {
+    font-size: 0.78rem;
+    padding: 5px 12px;
+  }
+}
