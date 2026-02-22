@@ -3,21 +3,21 @@
    =========================== */
 :root {
   /* カラーパレット（水色・自然系） */
-  --sky-light:    #e0f7fa;
-  --sky-mid:      #b2ebf2;
-  --sky-main:     #81d4fa;
-  --sky-deep:     #4fc3f7;
-  --sky-accent:   #29b6f6;
-  --teal-soft:    #80cbc4;
-  --teal-mid:     #4db6ac;
-  --green-leaf:   #a5d6a7;
-  --white-glass:  rgba(255, 255, 255, 0.65);
-  --white-soft:   rgba(255, 255, 255, 0.85);
-  --text-deep:    #2e6b7e;
-  --text-mid:     #4a8fa3;
-  --text-light:   #7ab8c9;
-  --shadow-soft:  rgba(79, 195, 247, 0.25);
-  --shadow-card:  rgba(41, 182, 246, 0.18);
+  --sky-light: #e0f7fa;
+  --sky-mid: #b2ebf2;
+  --sky-main: #81d4fa;
+  --sky-deep: #4fc3f7;
+  --sky-accent: #29b6f6;
+  --teal-soft: #80cbc4;
+  --teal-mid: #4db6ac;
+  --green-leaf: #a5d6a7;
+  --white-glass: rgba(255, 255, 255, 0.65);
+  --white-soft: rgba(255, 255, 255, 0.85);
+  --text-deep: #2e6b7e;
+  --text-mid: #4a8fa3;
+  --text-light: #7ab8c9;
+  --shadow-soft: rgba(79, 195, 247, 0.25);
+  --shadow-card: rgba(41, 182, 246, 0.18);
 
   /* タイポグラフィ */
   --font-jp: 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', sans-serif;
@@ -31,7 +31,9 @@
 /* ===========================
    リセット & ベース
    =========================== */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -45,14 +47,12 @@ html {
 body {
   min-height: 100%;
   font-family: var(--font-jp);
-  background: linear-gradient(
-    160deg,
-    #d6f0fa 0%,
-    #c2e9f5 25%,
-    #b8e4f0 50%,
-    #c5eef7 75%,
-    #d9f4fc 100%
-  );
+  background: linear-gradient(160deg,
+      #d6f0fa 0%,
+      #c2e9f5 25%,
+      #b8e4f0 50%,
+      #c5eef7 75%,
+      #d9f4fc 100%);
   background-attachment: fixed;
   display: flex;
   align-items: center;
@@ -77,18 +77,34 @@ body {
   position: absolute;
   bottom: -80px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.7), rgba(129,212,250,0.25));
-  border: 1px solid rgba(255,255,255,0.5);
+  background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.7), rgba(129, 212, 250, 0.25));
+  border: 1px solid rgba(255, 255, 255, 0.5);
   animation: floatUp linear infinite;
   will-change: transform, opacity;
 }
 
 @keyframes floatUp {
-  0%   { transform: translateY(0) translateX(0) scale(1);    opacity: 0; }
-  10%  { opacity: 0.7; }
-  50%  { transform: translateY(-45vh) translateX(20px) scale(1.05); }
-  90%  { opacity: 0.5; }
-  100% { transform: translateY(-105vh) translateX(-15px) scale(0.9); opacity: 0; }
+  0% {
+    transform: translateY(0) translateX(0) scale(1);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.7;
+  }
+
+  50% {
+    transform: translateY(-45vh) translateX(20px) scale(1.05);
+  }
+
+  90% {
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: translateY(-105vh) translateX(-15px) scale(0.9);
+    opacity: 0;
+  }
 }
 
 /* ===========================
@@ -117,8 +133,13 @@ body {
 }
 
 @keyframes waveFlow {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 /* ===========================
@@ -144,8 +165,15 @@ body {
 }
 
 @keyframes fadeInDown {
-  from { opacity: 0; transform: translateY(-20px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .leaf-icon {
@@ -157,8 +185,15 @@ body {
 }
 
 @keyframes sway {
-  0%, 100% { transform: rotate(-5deg); }
-  50%       { transform: rotate(5deg); }
+
+  0%,
+  100% {
+    transform: rotate(-5deg);
+  }
+
+  50% {
+    transform: rotate(5deg);
+  }
 }
 
 .title {
@@ -166,7 +201,7 @@ body {
   font-weight: 500;
   color: var(--text-deep);
   letter-spacing: 0.12em;
-  text-shadow: 0 1px 3px rgba(255,255,255,0.8);
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);
 }
 
 .subtitle {
@@ -183,8 +218,8 @@ body {
 .card {
   width: 100%;
   background: var(--white-glass);
-  backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
   border-radius: 32px;
   border: 1px solid rgba(255, 255, 255, 0.7);
   box-shadow:
@@ -200,8 +235,15 @@ body {
 }
 
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ===========================
@@ -288,8 +330,17 @@ body {
 }
 
 @keyframes ripplePulse {
-  0%, 100% { stroke-width: 18; opacity: 0.3; }
-  50%       { stroke-width: 28; opacity: 0.08; }
+
+  0%,
+  100% {
+    stroke-width: 18;
+    opacity: 0.3;
+  }
+
+  50% {
+    stroke-width: 28;
+    opacity: 0.08;
+  }
 }
 
 /* プログレスバー */
@@ -299,7 +350,8 @@ body {
   stroke-width: 10;
   stroke-linecap: round;
   stroke-dasharray: 603;
-  stroke-dashoffset: 603; /* JS で制御 */
+  stroke-dashoffset: 603;
+  /* JS で制御 */
   transition: stroke-dashoffset 0.6s var(--ease-smooth);
   filter: drop-shadow(0 0 6px rgba(79, 195, 247, 0.6));
 }
@@ -324,7 +376,7 @@ body {
   color: var(--text-deep);
   letter-spacing: 0.05em;
   line-height: 1;
-  text-shadow: 0 2px 6px rgba(255,255,255,0.9);
+  text-shadow: 0 2px 6px rgba(255, 255, 255, 0.9);
   transition: color 0.4s;
 }
 
@@ -362,7 +414,7 @@ body {
   font-size: 1.5rem;
   font-weight: 300;
   color: var(--text-deep);
-  background: rgba(255,255,255,0.55);
+  background: rgba(255, 255, 255, 0.55);
   border: 1.5px solid rgba(129, 212, 250, 0.45);
   border-radius: 14px;
   width: 72px;
@@ -371,6 +423,7 @@ body {
   outline: none;
   transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 .time-input::-webkit-outer-spin-button,
@@ -381,7 +434,7 @@ body {
 .time-input:focus {
   border-color: var(--sky-accent);
   box-shadow: 0 0 0 3px rgba(79, 195, 247, 0.2);
-  background: rgba(255,255,255,0.8);
+  background: rgba(255, 255, 255, 0.8);
 }
 
 .input-sep {
@@ -425,7 +478,7 @@ body {
   background: linear-gradient(135deg, var(--sky-main) 0%, var(--sky-accent) 100%);
   box-shadow:
     0 6px 20px rgba(41, 182, 246, 0.45),
-    0 2px 6px rgba(255,255,255,0.3) inset;
+    0 2px 6px rgba(255, 255, 255, 0.3) inset;
   color: #fff;
 }
 
@@ -439,7 +492,7 @@ body {
   transform: translateY(-3px) scale(1.06);
   box-shadow:
     0 10px 28px rgba(41, 182, 246, 0.55),
-    0 2px 6px rgba(255,255,255,0.3) inset;
+    0 2px 6px rgba(255, 255, 255, 0.3) inset;
 }
 
 /* リセット・サウンドボタン */
@@ -476,8 +529,8 @@ body {
   position: fixed;
   inset: 0;
   background: rgba(178, 235, 242, 0.35);
-  backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -495,7 +548,7 @@ body {
 .complete-card {
   background: var(--white-soft);
   border-radius: 28px;
-  border: 1px solid rgba(255,255,255,0.8);
+  border: 1px solid rgba(255, 255, 255, 0.8);
   box-shadow: 0 12px 48px rgba(41, 182, 246, 0.25);
   padding: 48px 56px;
   text-align: center;
@@ -507,8 +560,15 @@ body {
 }
 
 @keyframes popIn {
-  from { transform: scale(0.8); opacity: 0; }
-  to   { transform: scale(1);   opacity: 1; }
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .complete-emoji {
@@ -517,8 +577,15 @@ body {
 }
 
 @keyframes glitter {
-  from { transform: scale(1) rotate(-5deg); filter: brightness(1); }
-  to   { transform: scale(1.1) rotate(5deg); filter: brightness(1.2); }
+  from {
+    transform: scale(1) rotate(-5deg);
+    filter: brightness(1);
+  }
+
+  to {
+    transform: scale(1.1) rotate(5deg);
+    filter: brightness(1.2);
+  }
 }
 
 .complete-text {
