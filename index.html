@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>やすらぎタイマー</title>
   <meta name="description" content="自然をテーマにした、癒しの水色タイマー。静かで穏やかなサウンドとともに、リラックスした時間を過ごせます。" />
+
+  <!-- PWA 設定 -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#7ec8e3" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="やすらぎタイマー" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500&family=Lato:wght@300;400&display=swap" rel="stylesheet" />
@@ -111,5 +121,15 @@
   </div>
 
   <script src="app.js"></script>
+  <script>
+    // Service Worker の登録（PWA対応）
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js')
+          .then(() => console.log('✅ Service Worker 登録完了'))
+          .catch((err) => console.error('❌ Service Worker 登録失敗:', err));
+      });
+    }
+  </script>
 </body>
 </html>
